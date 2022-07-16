@@ -1,0 +1,41 @@
+{
+  "name": "metain-contract",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/chung-nguyen/metain-contract",
+  "author": "ntchung <nguyentruongchung@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ganache-cli --db .ganache -d --networkId 1337 -m \"myth like bonus scare over problem client lizard pioneer submit female collect\"",
+    "flatten": "gulp flatten",
+    "compile": "gulp flatten && hardhat compile",
+    "test": "gulp flatten && hardhat compile && hardhat test --network dev",
+    "test:interact:dev": "hardhat interact --network dev",
+    "test:interact:testnet": "hardhat interact --network testnet",    
+    "deploy:nft:dev": "hardhat deployNFT --verbose --network dev",
+    "deploy:nft:testnet": "hardhat deployNFT --verbose --network testnet --show-stack-traces",
+    "deploy:nft:mainnet": "hardhat deployNFT --verbose --network mainnet",    
+    "deploy:token:dev": "npx hardhat deployToken --network dev",
+    "deploy:token:testnet": "npx hardhat deployToken --network testnet",
+    "deploy:token:mainnet": "npx hardhat deployToken --network mainnet"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts-upgradeable": "^4.6.0"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@openzeppelin/hardhat-upgrades": "^1.18.1",
+    "chai": "^4.3.6",
+    "cross-env": "^7.0.3",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.8",
+    "ganache-cli": "^6.12.2",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "hardhat": "^2.9.7",
+    "minimist": "^1.2.6",
+    "moment": "^2.29.3",
+    "sol-merger": "^4.1.1"
+  }
+}
