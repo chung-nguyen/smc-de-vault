@@ -23,7 +23,7 @@ task("deployNFT", "Deploy NFT Contract").setAction(async () => {
   console.log(`Deploying ${contractFileName}...`);
 
   const Contract = await ethers.getContractFactory(contractFileName);
-  const nft = await Contract.deploy("2048", "2048");
+  const nft = await Contract.deploy("2048", "2048", "https://devault-metadata.s3.ap-northeast-1.amazonaws.com/2048/");
   await nft.deployed();
   console.log("NFT deployed to:", nft.address);
 

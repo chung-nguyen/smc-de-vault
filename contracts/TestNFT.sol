@@ -1341,7 +1341,7 @@ abstract contract ERC721Tradable is ERC721, Ownable {
      * We track the nextTokenId instead of the currentTokenId to save users on gas costs. 
      * Read more about it here: https://shiny.mirror.xyz/OUampBbIz9ebEicfGnQf5At_ReMHlZy0tB4glb9xQ0E
      */ 
-    Counters.Counter private _nextTokenId;
+    Counters.Counter internal _nextTokenId;
 
     constructor(
         string memory _name,
@@ -1369,9 +1369,9 @@ abstract contract ERC721Tradable is ERC721, Ownable {
         return _nextTokenId.current() - 1;
     }
 
-    function baseTokenURI() virtual public pure returns (string memory);
+    function baseTokenURI() virtual public view returns (string memory);
 
-    function tokenURI(uint256 _tokenId) override public pure returns (string memory) {
+    function tokenURI(uint256 _tokenId) override public view returns (string memory) {
         return string(abi.encodePacked(baseTokenURI(), Strings.toString(_tokenId)));
     }
 }
@@ -1382,9 +1382,25 @@ abstract contract ERC721Tradable is ERC721, Ownable {
  * TestNFT - a contract for testing.
  */
 contract TestNFT is ERC721Tradable {
-  constructor(string memory name, string memory ticker) ERC721Tradable(name, ticker) {  }
+  string private baseURI;
 
-  function baseTokenURI() override public pure returns (string memory) {
-    return "https://devault-metadata.s3.ap-northeast-1.amazonaws.com/2048/";
+  constructor(string memory name, string memory ticker, string memory _baseURI) ERC721Tradable(name, ticker) {  
+    setBaseTokenURI(_baseURI);
+  }
+
+  function baseTokenURI() override public view returns (string memory) {
+    return baseURI;
+  }
+
+  function setBaseTokenURI(string memory _baseURI) public onlyOwner {
+    baseURI = _baseURI;
+  }
+  
+  function create(uint256 id, address _to) public onlyOwner {      
+    _safeMint(_to, id);
+  }
+
+  function changeOwnership(uint256 id, address _to) public onlyOwner {
+    _transfer(ownerOf(id), _to, id);
   }
 }

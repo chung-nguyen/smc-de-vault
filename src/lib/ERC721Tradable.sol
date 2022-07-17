@@ -30,7 +30,7 @@ abstract contract ERC721Tradable is ERC721, Ownable {
      * We track the nextTokenId instead of the currentTokenId to save users on gas costs. 
      * Read more about it here: https://shiny.mirror.xyz/OUampBbIz9ebEicfGnQf5At_ReMHlZy0tB4glb9xQ0E
      */ 
-    Counters.Counter private _nextTokenId;
+    Counters.Counter internal _nextTokenId;
 
     constructor(
         string memory _name,
@@ -58,9 +58,9 @@ abstract contract ERC721Tradable is ERC721, Ownable {
         return _nextTokenId.current() - 1;
     }
 
-    function baseTokenURI() virtual public pure returns (string memory);
+    function baseTokenURI() virtual public view returns (string memory);
 
-    function tokenURI(uint256 _tokenId) override public pure returns (string memory) {
+    function tokenURI(uint256 _tokenId) override public view returns (string memory) {
         return string(abi.encodePacked(baseTokenURI(), Strings.toString(_tokenId)));
     }
 }
